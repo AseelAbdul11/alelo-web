@@ -6,12 +6,14 @@ export interface IssueInitialState {
   image: any;
   finalImage: any;
   validation: any;
+  edit : any
 }
 const initialState: IssueInitialState = {
   name: null,
   image: null,
   validation: false,
   finalImage: null,
+  edit : false
 };
 
 // Part 3
@@ -42,6 +44,9 @@ export const PopupSlice = createSlice({
     setFinalImage: (state, action: any) => {
       state.finalImage = action.payload;
     },
+    editToggle : (state, action : any)=>{
+      state.edit = action.payload
+    }
   },
 });
 
@@ -54,5 +59,6 @@ export const {
   clearName,
   setValidation,  
   setFinalImage,
+  editToggle
 } = PopupSlice.actions;
 export default PopupSlice.reducer;

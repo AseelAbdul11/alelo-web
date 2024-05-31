@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import MainContainer from "../Containers/MainContainer/MainContainer";
 import * as RoutePath from "../Entities/RoutePath";
 import Popup from "../Components/Popup/Popup";
+import { LoginContainer } from "../Components/Login/LoginContainer/LoginContainer";
 
 const Dashboard = React.lazy(() => import("../Containers/Dashboard/Dashboard"));
 const UserManagement = React.lazy(
@@ -71,6 +72,8 @@ const Routing = ({}) => {
         }
       />
       {/* <Route path="/" element={<Popup />} /> */}
+      <Route path={"/"} element={<LoginContainer />}/>
+
     </Routes>
   );
 };

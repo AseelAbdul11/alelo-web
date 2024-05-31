@@ -9,11 +9,13 @@ interface myComponentProps {
   data: any;
   isSelectable: any;
   productsID: any;
+  edit : any
 }
 export const Card: FC<myComponentProps> = ({
   data,
   isSelectable,
   productsID,
+  edit 
 }) => {
   const dispatch = useDispatch();
   const handleChange = (category: any, checked: boolean) => {
@@ -34,9 +36,12 @@ export const Card: FC<myComponentProps> = ({
         )}
 
         <div className="card-edit">
-          <img src={editIcon} alt="editIcon" />
+          <img src={editIcon} alt="editIcon" onClick={()=>edit(data)} />
         </div>
+        <div className="card-image-section">
+
         <img src={data.photo} width="100%" className="card-image" />
+        </div>
         <div className="card-name-section mt-1">
           <div className="card-name">{data.name}</div>
           <div>

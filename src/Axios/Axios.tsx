@@ -7,7 +7,7 @@ export default (() => {
   const instance = axios.create({
     headers: {
       "Accept-Language": "en-US",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5MS04MTI0MzgwMDM5IiwiZXhwIjoxNzE5MjI0MTExLCJpYXQiOjE3MTcxNTA1MTF9.sgLRDv4PIPmj-J3P39mbM6TA3vpnBaeUth-bWP_hUkg`,
     },
   });
 

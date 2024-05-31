@@ -7,6 +7,8 @@ import {
   clearSearch,
   addCategory,
   searchCategory,
+  setCategory,
+  insertCategory,
 } from "../../Slices/CategorySlice";
 import Popup from "../../Components/Popup/Popup";
 import "../../Styles/Categories.css";
@@ -14,6 +16,9 @@ import {
   clearImage,
   clearName,
   clearValidation,
+  editToggle,
+  setImage,
+  setName,
   setValidation,
 } from "../../Slices/PopupSlice";
 
@@ -31,10 +36,14 @@ const Categories = () => {
 
   const [openCategoryDialog, setOpenCategoryDialog] = useState(false);
   const [count, setCount] = useState(0);
+  const [openEditCategoryDialog, setOpenEditCategoryDialog] = useState(false);
+  const edit = useSelector((state: any) => state.popup.edit)
+  const category = useSelector((state: any) => state.category.category)
+
   useEffect(() => {
     setDisplayData(getCategorisList);
     dispatch(clearSearch());
-  }, []);
+  }, [getCategorisList]);
 
   useEffect(() => {
     if (name && finalImage) {
@@ -43,12 +52,20 @@ const Categories = () => {
       formData.append("image", image);
       let value: any = false;
       const data: any = {
-        category: name,
-        image: finalImage || image,
+        name: name,
+        photo: finalImage || image,
         show: true,
         list: [],
       };
-      dispatch(addCategory(data));
+      if (edit) {
+        let finalCategory = JSON.parse(JSON.stringify(category))
+        finalCategory.name = name
+        finalCategory.photo = finalImage || image
+        console.log(finalCategory)
+        dispatch(insertCategory(finalCategory))
+      } else {
+        dispatch(addCategory(data));
+      }
       dispatch(setValidation(value));
     }
   }, [finalImage]);
@@ -83,6 +100,22 @@ const Categories = () => {
       }
     }
   }, [searchText]);
+  const editCategory = (data: any) => {
+    console.log(data)
+    let toggle: any = true
+    dispatch(clearValidation());
+    setOpenEditCategoryDialog(true);
+    dispatch(setCategory(data))
+    dispatch(setName(data.name))
+    dispatch(setImage(data.photo))
+    dispatch(editToggle(toggle))
+  }
+
+  const editClose = () => {
+    let toggle: any = false
+    setOpenEditCategoryDialog(false);
+    dispatch(editToggle(toggle))
+  }
   return (
     <>
       <div className="categories-container">
@@ -104,7 +137,7 @@ const Categories = () => {
         />
         {displayData.map((category: any) => {
           return (
-            <Card productsID={false} isSelectable={false} data={category} />
+            <Card productsID={false} isSelectable={false} data={category} edit={editCategory}/>
           );
         })}
       </div>
@@ -116,6 +149,14 @@ const Categories = () => {
           "api";
         }}
         popUpTitle={"Add Category"}
+      />
+      <Popup
+        onClose={() => editClose()}
+        isOpen={openEditCategoryDialog}
+        onClick={() => {
+          "api";
+        }}
+        popUpTitle={"Edit Category"}
       />
     </>
   );

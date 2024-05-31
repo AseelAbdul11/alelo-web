@@ -60,16 +60,16 @@ function App() {
     })();
     const reqBody = {
       country_code: 91,
-      mobile_number: 8825907856,
+      mobile_number: 8124380039,
       otp: 255155,
       deviceId:
         "fjmmoz4-RIKV9Y36Q2MtH9:APA91bGXWm82Fw09ZIMS_tJFqT_BXtWUSLoPBvxZut5WnD-…",
     };
     OtpAPI.mutate({
       country_code: 91,
-      mobile_number: 8825907856,
+      mobile_number: 8124380039,
     });
-    LoginAPI.mutate(reqBody);
+    // LoginAPI.mutate(reqBody);
   }, []);
 
   return (

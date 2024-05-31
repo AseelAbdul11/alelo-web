@@ -1,5 +1,6 @@
 export const getCroppedImg = (images: any, crop: any, fileName: any) => {
   const canvas = document.createElement("canvas");
+  console.log(images)
   const scaleX = images.naturalWidth / images.width;
   const scaleY = images.naturalHeight / images.height;
   canvas.width = crop.width;
