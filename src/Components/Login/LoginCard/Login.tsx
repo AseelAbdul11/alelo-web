@@ -15,7 +15,6 @@ export const Login: FC = () => {
   const [validation, setValidation] :any = useState([])
   const onFinishFailed = (errorInfo: any) => {
     setValidation(['onChange', 'onBlur'])
-
   };
   const regex = (val: any) => {
     const value = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/

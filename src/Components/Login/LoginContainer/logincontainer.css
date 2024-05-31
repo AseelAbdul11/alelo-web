@@ -25,8 +25,12 @@
 
 
 .login-image {
-    transform: translateY(162px);
-    width: 49%
+    width: 100%
+}
+
+.login-image-section{
+    position : relative;
+    width : 49%
 }
 
 
@@ -44,8 +48,22 @@
         padding-top: 100px;
     }
 
+    .login-image-section{
+        width : 60%
+    }
     .login-container{
         padding-top : 70px
     }
 
 }
+
+
+@media screen and (min-width : 1440px) {
+
+    .login-image-section{
+        width : 45%
+    }
+ }
+
+
+

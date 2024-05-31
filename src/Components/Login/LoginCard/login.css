@@ -1,7 +1,7 @@
 .login-block{
-    width: 69%;
-    min-width: 400px;
-    height: 640px;
+    width: 60%;
+    min-width: 385px;
+    height: 578px;
     box-shadow: 13px 13px 20px 0px rgba(1, 174, 154, 0.15);
     border-radius: 48px;
     background-color: #fff;
@@ -22,10 +22,18 @@
 
     
 
-    .login-block{
+    /* .login-block{
         
         height: 583px;
       
         padding: 44px 76px;
-    }
+    } */
+}
+
+
+@media screen and (min-width : 1440px) {
+
+   .login-block{
+width : 480px
+   }
 }

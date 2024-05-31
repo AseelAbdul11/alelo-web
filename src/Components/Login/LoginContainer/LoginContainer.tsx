@@ -11,7 +11,10 @@ export const LoginContainer: FC = () => {
       </div>
       <div className="login-inner-block">
         <div className="login-body">
-          <img className='login-image' src={loginImage} alt=""  />
+          <div className='login-image-section'>
+          <img className='login-image' src={loginImage} alt="" style={{ position : 'absolute',bottom : '-176px'}}  />
+
+          </div>
           <div className='login-block-1'>
           <Login />
           </div>
