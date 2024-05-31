@@ -1,0 +1,21 @@
+.categories-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 45px;
+    row-gap: 30px;
+}
+
+@media only screen and (min-width:1024px) and (max-width: 1200px) {
+
+    .categories-container {
+        gap: 30px;
+    }
+}
+
+@media only screen and (min-width:768px) and (max-width: 1023px) {
+
+    .categories-container {
+        gap: 15px;
+    }
+}

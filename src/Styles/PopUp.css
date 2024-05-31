@@ -1,0 +1,66 @@
+@import url("https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css");
+
+.popup-container {
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.modal-content {
+    height: 440px;
+    width: 350px;
+    background-color: "#F7FCFB";
+    margin: auto;
+    background-color: #F2F8F7;
+    border-radius: 20px;
+}
+
+.modal-header {
+    border-bottom: 1px solid #979797;
+    display: flex;
+    /* align-items: center; */
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 15px;
+    padding-top: 15px;
+    height: 8vh;
+
+}
+
+.Popup_header_Text {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19.36px;
+    margin: 0;
+    padding: 0;
+}
+
+.popup_body {
+    padding: 5px;
+}
+
+.Pop_Button_Container {
+    gap: 20px;
+    padding: 15px;
+    width: 85%;
+    margin: auto;
+}
+
+.popup-field {
+    margin-bottom: 10px
+}
+
+.crop-image {
+    width: 300px;
+    height: 150px;
+    object-fit: contain;
+}
+
+.error-text{
+    font-size: 10px;
+    color : red;
+    margin-left : 4px;
+    line-height: 20px;
+}

@@ -1,0 +1,22 @@
+.file_btn_div {
+    position: relative;
+    overflow: hidden;
+    height: 29.7px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 8px;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    cursor: pointer;
+}
+
+.input_file {
+    position: absolute;
+    font-size: 50px;
+    opacity: 0;
+    cursor: pointer;
+}

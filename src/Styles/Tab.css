@@ -1,0 +1,58 @@
+.Tab-Container {
+    background-color: #01AE9A;
+    height: 65px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+
+
+.TabItem {
+    margin: 0;
+    padding: 0;
+    padding: 10px;
+    border-radius: 50px;
+    font-size: 20px;
+    font-weight: 500;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    border: #fff;
+    outline: none;
+}
+
+
+
+@media only screen and (min-width:1024px) and (max-width: 1200px) {
+    .Tab-Container {
+        height: 60px;
+    }
+
+    .TabItem {
+        font-size: 15px;
+        height: 44px;
+
+    }
+}
+
+@media only screen and (min-width:768px) and (max-width: 1023px) {
+
+    .Tab-Container {
+        /* width: 100%; */
+        /* overflow-x: scroll; */
+
+    }
+
+    .css-8atqhb {
+        /* width: 80%; */
+    }
+
+    .TabItem {
+        /* width: 150px; */
+    }
+}
