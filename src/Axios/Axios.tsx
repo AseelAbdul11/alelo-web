@@ -7,13 +7,19 @@ export default (() => {
   const instance = axios.create({
     headers: {
       "Accept-Language": "en-US",
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5MS04MTI0MzgwMDM5IiwiZXhwIjoxNzE5MjI0MTExLCJpYXQiOjE3MTcxNTA1MTF9.sgLRDv4PIPmj-J3P39mbM6TA3vpnBaeUth-bWP_hUkg`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
   const getInstance = (url: any) => {
     instance.defaults.baseURL = url;
     instance.defaults.headers.common["Content-Type"] = "application/json";
+    return instance;
+  };
+
+  const getFormDataInstance = (url: any) => {
+    instance.defaults.baseURL = url;
+    instance.defaults.headers.common["Content-Type"] = "multipart/form-data";
     return instance;
   };
   // const setAccessToken = (token: any) => {
@@ -26,6 +32,7 @@ export default (() => {
 
   return {
     getInstance: (url: any) => getInstance(url),
+    getFormDataInstance: (url: any) => getFormDataInstance(url),
     // setAccessToken: (url: any) => setAccessToken(url),
     instance: instance,
   };

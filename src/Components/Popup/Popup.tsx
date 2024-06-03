@@ -86,6 +86,7 @@ const Popup: React.FC<Props> = ({ isOpen, popUpTitle, onClick, onClose }) => {
 
   function handleChange(e: any) {
     let file = e.target.files[0];
+    dispatch(setImage(file));
 
     const fileType = file?.type;
     if (fileType === "image/png" || fileType === "image/jpeg") {
@@ -94,7 +95,7 @@ const Popup: React.FC<Props> = ({ isOpen, popUpTitle, onClick, onClose }) => {
       reader.addEventListener("load", () => {
         const imageUrl: any = reader.result?.toString() || "";
 
-        dispatch(setImage(imageUrl));
+        // dispatch(setImage(imageUrl));
       });
 
       reader.readAsDataURL(file);
@@ -208,6 +209,7 @@ const Popup: React.FC<Props> = ({ isOpen, popUpTitle, onClick, onClose }) => {
                     clearAll();
                   }
                 }, 200);
+                onClick()
               }}
             />
           </div>

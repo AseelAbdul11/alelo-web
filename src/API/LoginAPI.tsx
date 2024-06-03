@@ -4,7 +4,7 @@ import Axios from "../Axios/Axios";
 
 const API = Axios.getInstance;
 
-export const Login = (data: any) => {
+export const PostLogin = (data: any) => {
   const url = Endpoints.LOGIN;
 
   return API(Endpoints.API_ENDPOINT)

@@ -24,8 +24,8 @@ export const getCroppedImg = (images: any, crop: any, fileName: any) => {
         console.error("Canvas is empty");
         return;
       }
-      const fileUrl = window.URL.createObjectURL(blob);
-      resolve(fileUrl);
+      // const fileUrl = window.URL.createObjectURL(blob);
+      resolve(blob);
     }, "image/jpeg");
   });
 };
