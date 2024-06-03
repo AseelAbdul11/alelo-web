@@ -41,7 +41,7 @@ export const AddProductImage = (data: any) => {
   };
 
   return APIFORMDATA(Endpoints.API_ENDPOINT)
-    .post(url, photo)
+    .post(url, reqBody)
     .then((response) => response)
     .catch((err) => err);
 };

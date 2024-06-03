@@ -13,6 +13,8 @@ import {
 } from "../../API/ProductsAPI";
 import { CircularProgress } from "@mui/material";
 import {
+  clearImage,
+  clearName,
   clearValidation,
   editToggle,
   setImage,
@@ -74,6 +76,9 @@ const Products: React.FC<ProductProps> = ({ product_Id }) => {
           photo: image,
         };
         addProductImageApi.mutate(imageReqBody);
+        setOpenProductsDialog(false);
+        getProductsByIdApi.mutate(product_Id);
+        clearAll();
       }
     },
     onError: (err) => {
@@ -83,9 +88,7 @@ const Products: React.FC<ProductProps> = ({ product_Id }) => {
   const addProductImageApi = useMutation({
     mutationFn: (val: any) => AddProductImage(val),
     onSuccess: (res) => {
-      if (res.data) {
-        console.log(res.data);
-      }
+      return;
     },
     onError: (err) => {
       console.log(err);
@@ -94,18 +97,28 @@ const Products: React.FC<ProductProps> = ({ product_Id }) => {
 
   const handleAddProduct = () => {
     const addProductReqBody = {
-      name: name,
+      id: null,
+      price: 0,
+      uom: null,
       category_id: product_Id,
-      price: 120,
-      uom: "Kg",
+      name: name,
+      status: null,
       language_name: [
         {
-          lang: "en",
-          name: name,
+          lang: null,
+          name: null,
         },
       ],
+      photo: null,
     };
-    addProductApi.mutate({ addProductReqBody });
+
+    addProductApi.mutate(addProductReqBody);
+  };
+
+  const clearAll = () => {
+    dispatch(clearImage());
+    dispatch(clearName());
+    dispatch(clearValidation());
   };
   return (
     <>
@@ -163,7 +176,10 @@ const Products: React.FC<ProductProps> = ({ product_Id }) => {
       </div>
 
       <Popup
-        onClose={() => setOpenProductsDialog(false)}
+        onClose={() => {
+          setOpenProductsDialog(false);
+          clearAll();
+        }}
         isOpen={openProductsDialog}
         onClick={() => {
           handleAddProduct();

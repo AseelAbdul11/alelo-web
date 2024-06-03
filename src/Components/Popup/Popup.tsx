@@ -4,14 +4,7 @@ import InputField from "../InputField/InputField";
 import Button from "../Button/Button";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  clearImage,
-  clearName,
-  clearValidation,
-  setFinalImage,
-  setImage,
-  setName,
-} from "../../Slices/PopupSlice";
+import { setFinalImage, setImage, setName } from "../../Slices/PopupSlice";
 import ReactCrop, { Crop, centerCrop, makeAspectCrop } from "react-image-crop";
 import { getCroppedImg } from "../../Utils/Popup/PopupUtils";
 import "react-image-crop/dist/ReactCrop.css";
@@ -86,19 +79,16 @@ const Popup: React.FC<Props> = ({ isOpen, popUpTitle, onClick, onClose }) => {
 
   function handleChange(e: any) {
     let file = e.target.files[0];
-    dispatch(setImage(file));
+    console.log(file, "file");
 
     const fileType = file?.type;
-    if (fileType === "image/png" || fileType === "image/jpeg") {
+    if (
+      fileType === "image/png" ||
+      fileType === "image/jpeg" ||
+      fileType === "image/jpg"
+    ) {
       setFormatError(false);
-      const reader = new FileReader();
-      reader.addEventListener("load", () => {
-        const imageUrl: any = reader.result?.toString() || "";
-
-        // dispatch(setImage(imageUrl));
-      });
-
-      reader.readAsDataURL(file);
+      dispatch(setImage(file));
     } else {
       setFormatError(true);
     }
@@ -111,16 +101,18 @@ const Popup: React.FC<Props> = ({ isOpen, popUpTitle, onClick, onClose }) => {
         crop,
         "croppedImage.jpeg"
       );
-      
+
       dispatch(setFinalImage(croppedImageUrl));
     }
   };
 
-  const clearAll = () => {
-    onClose();
-    dispatch(clearImage());
-    dispatch(clearName());
-    dispatch(clearValidation());
+  const handleAddProduct = () => {
+    if (imageValid && nameValid) {
+      if (crop.width && crop.height && imgRef.current) {
+        // makeClientCrop(completedCrop);
+      }
+      onClick();
+    }
   };
 
   return (
@@ -193,7 +185,7 @@ const Popup: React.FC<Props> = ({ isOpen, popUpTitle, onClick, onClose }) => {
           >
             <Button
               onClick={() => {
-                clearAll();
+                onClose();
               }}
               type="Outline"
               label={"Cancel"}
@@ -202,14 +194,7 @@ const Popup: React.FC<Props> = ({ isOpen, popUpTitle, onClick, onClose }) => {
               type="Contain_Dark"
               label={"Save"}
               onClick={() => {
-                makeClientCrop(completedCrop);
-                // onClick();
-                setTimeout(() => {
-                  if (imageValid && nameValid) {
-                    clearAll();
-                  }
-                }, 200);
-                onClick()
+                handleAddProduct();
               }}
             />
           </div>
