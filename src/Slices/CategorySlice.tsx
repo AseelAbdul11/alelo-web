@@ -12,92 +12,7 @@ export interface IssueInitialState {
 export const initialState: IssueInitialState = {
   search: null,
   category: null,
-  categories: [
-    {
-      id: 1,
-      name: "Vegetables",
-      photo: vegetables,
-      show: true,
-      list: [],
-    },
-    {
-      id: 2,
-      name: "Fruits",
-      photo: vegetables,
-      show: true,
-      list: [],
-    },
-    {
-      id: 3,
-      name: "Nuts",
-      photo: vegetables,
-      show: true,
-      list: [],
-    },
-    {
-      id: 4,
-      name: "Grocery",
-      photo: vegetables,
-      show: true,
-      list: [],
-    },
-    {
-      id: 5,
-      name: "Icecream",
-      photo: vegetables,
-      show: true,
-      list: [],
-    },
-    {
-      id: 6,
-      name: "Cloths",
-      photo: vegetables,
-      show: true,
-      list: [],
-    },
-    {
-      id: 7,
-      name: "Cloths",
-      photo: vegetables,
-      show: true,
-      list: [],
-    },
-    {
-      id: 8,
-      name: "Cloths",
-      photo: vegetables,
-      show: true,
-      list: [],
-    },
-    {
-      id: 9,
-      name: "Cloths",
-      photo: vegetables,
-      show: true,
-      list: [],
-    },
-    {
-      id: 10,
-      name: "Cloths",
-      photo: vegetables,
-      show: true,
-      list: [],
-    },
-    {
-      id: 11,
-      name: "Cloths",
-      photo: vegetables,
-      show: true,
-      list: [],
-    },
-    {
-      id: 12,
-      name: "Cloths",
-      photo: vegetables,
-      show: true,
-      list: [],
-    },
-  ],
+  categories: []
 };
 
 // Part 3
@@ -128,11 +43,14 @@ export const categorySlice = createSlice({
       const data = action.payload
       console.log(data)
       //call api
+    },
+    setCategoriesList  : (state ,action : any ) =>{
+      state.categories = action.payload
     }
   }
 });
 
 // Part 4
-export const { switchToggle, searchCategory, clearSearch, addCategory, insertCategory, setCategory } =
+export const { switchToggle, searchCategory, clearSearch, addCategory, insertCategory, setCategory ,setCategoriesList} =
   categorySlice.actions;
 export default categorySlice.reducer;

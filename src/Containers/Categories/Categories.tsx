@@ -9,6 +9,7 @@ import {
   searchCategory,
   setCategory,
   insertCategory,
+  setCategoriesList,
 } from "../../Slices/CategorySlice";
 import Popup from "../../Components/Popup/Popup";
 import "../../Styles/Categories.css";
@@ -21,6 +22,8 @@ import {
   setName,
   setValidation,
 } from "../../Slices/PopupSlice";
+import { AddCategory, addCategoryImage, getAllCategories } from "../../API/CategoriesAPI";
+import { useMutation } from "react-query";
 
 const Categories = () => {
   const getCategorisList = useSelector(
@@ -33,73 +36,51 @@ const Categories = () => {
   const name = useSelector((state: any) => state?.popup?.name);
   const image = useSelector((state: any) => state?.popup?.image);
   const finalImage = useSelector((state: any) => state?.popup?.finalImage);
-
   const [openCategoryDialog, setOpenCategoryDialog] = useState(false);
   const [count, setCount] = useState(0);
   const [openEditCategoryDialog, setOpenEditCategoryDialog] = useState(false);
   const edit = useSelector((state: any) => state.popup.edit)
   const category = useSelector((state: any) => state.category.category)
-
   useEffect(() => {
-    setDisplayData(getCategorisList);
-    dispatch(clearSearch());
-  }, [getCategorisList]);
+    setDisplayData(getCategorisList)
 
+  }, [getCategorisList])
   useEffect(() => {
-    if (name && finalImage) {
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("image", image);
-      let value: any = false;
-      const data: any = {
-        name: name,
-        photo: finalImage || image,
-        show: true,
-        list: [],
-      };
-      if (edit) {
-        let finalCategory = JSON.parse(JSON.stringify(category))
-        finalCategory.name = name
-        finalCategory.photo = finalImage || image
-        console.log(finalCategory)
-        dispatch(insertCategory(finalCategory))
-      } else {
-        dispatch(addCategory(data));
-      }
-      dispatch(setValidation(value));
+    if(getCategorisList.length == 0){
+      console.log('hit')
+      getCategories.mutate()
     }
-  }, [finalImage]);
+  }, [])
+  // useEffect(() => {
+  //   if (search) {
+  //     const filterData = getCategorisList.filter((data: any) => {
+  //       let category = data.category.toLowerCase();
+  //       if (category.includes(search)) {
+  //         return data;
+  //       }
+  //     });
+  //     setDisplayData(filterData);
+  //   } else {
+  //     setDisplayData(getCategorisList);
+  //   }
+  //   setCount(1);
+  // }, [search]);
 
-  useEffect(() => {
-    if (search) {
-      const filterData = getCategorisList.filter((data: any) => {
-        let category = data.category.toLowerCase();
-        if (category.includes(search)) {
-          return data;
-        }
-      });
-      setDisplayData(filterData);
-    } else {
-      setDisplayData(getCategorisList);
-    }
-    setCount(1);
-  }, [search]);
-
-  useEffect(() => {
-    if (count >= 1) {
-      if (searchText) {
-        const filterData = getCategorisList.filter((data: any) => {
-          let category = data.category.toLowerCase();
-          if (category.includes(searchText)) {
-            return data;
-          }
-        });
-        setDisplayData(filterData);
-      } else {
-        setDisplayData(getCategorisList);
-      }
-    }
-  }, [searchText]);
+  // useEffect(() => {
+  //   if (count >= 1) {
+  //     if (searchText) {
+  //       const filterData = getCategorisList.filter((data: any) => {
+  //         let category = data.category.toLowerCase();
+  //         if (category.includes(searchText)) {
+  //           return data;
+  //         }
+  //       });
+  //       setDisplayData(filterData);
+  //     } else {
+  //       setDisplayData(getCategorisList);
+  //     }
+  //   }
+  // }, [searchText]);
   const editCategory = (data: any) => {
     console.log(data)
     let toggle: any = true
@@ -115,6 +96,72 @@ const Categories = () => {
     let toggle: any = false
     setOpenEditCategoryDialog(false);
     dispatch(editToggle(toggle))
+  }
+
+  const getCategories = useMutation({
+    mutationFn: () => getAllCategories(),
+    onSuccess: (res) => {
+      console.log(res.data)
+      dispatch(setCategoriesList(res.data))
+      setDisplayData(getCategorisList);
+      dispatch(clearSearch());
+    }, onError: (err) => {
+      console.log(err)
+    }
+  })
+
+  const addCategoryAPi = useMutation({
+    mutationFn: (val) => AddCategory(val),
+    onSuccess: (res) => {
+      const imageReqBody = {
+        product_Id: res.data.id,
+        photo: image,
+      };
+      addCategoryImageApi.mutate(imageReqBody)
+      // dispatch(addCategory(res.data))
+    }
+  })
+
+  const addCategoryImageApi = useMutation({
+    mutationFn: (val: any) => addCategoryImage(val),
+    onSuccess: (res) => {
+      if (res.data) {
+        console.log(res.data);
+        getCategories.mutate()
+      }
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+
+  const handleAddCategory = () => {
+    // if (name && finalImage) {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("image", image);
+      let value: any = false;
+      const data: any = {
+        name: name,
+        photo: finalImage || image,
+        show: true,
+        list: [],
+      };
+      addCategoryAPi.mutate(data)
+      // dispatch(addCategory(data));
+      dispatch(setValidation(value));
+    // }
+  }
+
+  const handleUpdateCategory = () => {
+    let value: any = false;
+    let finalCategory = JSON.parse(JSON.stringify(category))
+    finalCategory.name = name
+    finalCategory.photo = finalImage || image
+    console.log(finalCategory)
+    dispatch(insertCategory(finalCategory))
+    dispatch(setValidation(value));
   }
   return (
     <>
@@ -137,7 +184,7 @@ const Categories = () => {
         />
         {displayData.map((category: any) => {
           return (
-            <Card productsID={false} isSelectable={false} data={category} edit={editCategory}/>
+            <Card productsID={false} isSelectable={false} data={category} edit={editCategory} />
           );
         })}
       </div>
@@ -145,9 +192,7 @@ const Categories = () => {
       <Popup
         onClose={() => setOpenCategoryDialog(false)}
         isOpen={openCategoryDialog}
-        onClick={() => {
-          "api";
-        }}
+        onClick={handleAddCategory}
         popUpTitle={"Add Category"}
       />
       <Popup
