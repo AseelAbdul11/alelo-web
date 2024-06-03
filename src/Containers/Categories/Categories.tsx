@@ -101,7 +101,6 @@ const Categories = () => {
   const getCategories = useMutation({
     mutationFn: () => getAllCategories(),
     onSuccess: (res) => {
-      console.log(res.data)
       dispatch(setCategoriesList(res.data))
       setDisplayData(getCategorisList);
       dispatch(clearSearch());
@@ -126,7 +125,6 @@ const Categories = () => {
     mutationFn: (val: any) => addCategoryImage(val),
     onSuccess: (res) => {
       if (res.data) {
-        console.log(res.data);
         getCategories.mutate()
       }
     },

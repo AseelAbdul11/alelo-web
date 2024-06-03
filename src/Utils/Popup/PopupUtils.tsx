@@ -19,13 +19,16 @@ export const getCroppedImg = (images: any, crop: any, fileName: any) => {
   );
 
   return new Promise((resolve, reject) => {
-    canvas.toBlob((blob) => {
-      if (!blob) {
-        console.error("Canvas is empty");
-        return;
-      }
-      // const fileUrl = window.URL.createObjectURL(blob);
-      resolve(blob);
+    canvas.toBlob((blob : any) => {
+      const file = new File(
+        [blob],
+        'croppedImage.png',  // Set the name of the file
+        {
+          type: 'image/png',
+          lastModified: Date.now(),
+        }
+      );
+      resolve(file)
     }, "image/jpeg");
   });
 };

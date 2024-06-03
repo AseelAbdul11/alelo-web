@@ -27,6 +27,7 @@ interface ProductProps {
 }
 const Products: React.FC<ProductProps> = ({ product_Id }) => {
   const dispatch = useDispatch();
+  const finalImage = useSelector((state: any) => state.popup.finalImage)
   const [openProductsDialog, setOpenProductsDialog] = useState(false);
   const [openEditProductsDialog, setOpenEditProductsDialog] = useState(false);
   const [products, setProducts] = useState([]);
@@ -73,8 +74,9 @@ const Products: React.FC<ProductProps> = ({ product_Id }) => {
       if (res.data) {
         const imageReqBody = {
           product_Id: res.data.id,
-          photo: image,
+          photo: finalImage,
         };
+        console.log(finalImage)
         addProductImageApi.mutate(imageReqBody);
         setOpenProductsDialog(false);
         getProductsByIdApi.mutate(product_Id);
@@ -111,7 +113,8 @@ const Products: React.FC<ProductProps> = ({ product_Id }) => {
       ],
       photo: null,
     };
-
+    console.log(finalImage, 'final')
+    console.log(addProductReqBody)
     addProductApi.mutate(addProductReqBody);
   };
 

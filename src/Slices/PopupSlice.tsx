@@ -42,6 +42,7 @@ export const PopupSlice = createSlice({
       state.validation = action.payload;
     },
     setFinalImage: (state, action: any) => {
+      console.log(action.payload)
       state.finalImage = action.payload;
     },
     editToggle : (state, action : any)=>{

@@ -78,19 +78,18 @@ const Popup: React.FC<Props> = ({ isOpen, popUpTitle, onClick, onClose }) => {
   }, []);
 
   function handleChange(e: any) {
-    let file = e.target.files[0];
-    console.log(file, "file");
-
+    let file = e.target.files[0]
     const fileType = file?.type;
-    if (
-      fileType === "image/png" ||
-      fileType === "image/jpeg" ||
-      fileType === "image/jpg"
-    ) {
-      setFormatError(false);
-      dispatch(setImage(file));
+    if (fileType === 'image/png' || fileType === 'image/jpeg') {
+      setFormatError(false)
+      const reader = new FileReader()
+      reader.addEventListener('load', () => {
+        const imageUrl: any = reader.result?.toString() || ''
+        dispatch(setImage(imageUrl)) // image url to crop section
+      })
+      reader.readAsDataURL(file)
     } else {
-      setFormatError(true);
+      setFormatError(true)
     }
   }
 
@@ -109,11 +108,17 @@ const Popup: React.FC<Props> = ({ isOpen, popUpTitle, onClick, onClose }) => {
   const handleAddProduct = () => {
     if (imageValid && nameValid) {
       if (crop.width && crop.height && imgRef.current) {
-        // makeClientCrop(completedCrop);
+        makeClientCrop(completedCrop);
       }
       onClick();
     }
   };
+  const handleCropImage = (croppedImage: any) => {
+    setCrop(croppedImage);
+    makeClientCrop(croppedImage);
+  }
+
+
 
   return (
     <Modal show={isOpen} backdrop="static" keyboard={false} centered>
@@ -142,7 +147,10 @@ const Popup: React.FC<Props> = ({ isOpen, popUpTitle, onClick, onClose }) => {
               <ReactCrop
                 crop={crop}
                 onComplete={(c: any) => setCompletedCrop(c)}
-                onChange={(newCrop: any) => setCrop(newCrop)}
+                onChange={(newCrop: any) =>
+                  handleCropImage(newCrop)
+                  // { setCrop(newCrop) }
+                }
                 aspect={16 / 9}
               >
                 <img
