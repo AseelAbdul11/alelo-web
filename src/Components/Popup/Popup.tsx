@@ -160,7 +160,8 @@ const Popup: React.FC<Props> = ({ isOpen, popUpTitle, onClick, onClose }) => {
                   ref={imgRef}
                 />
               </ReactCrop>
-            ) : (
+            ) : null}
+            <div style={{ display: image ? 'none' : 'block' }}>
               <InputField
                 forwardedRef={myComponentRef}
                 type="image_input"
@@ -168,7 +169,7 @@ const Popup: React.FC<Props> = ({ isOpen, popUpTitle, onClick, onClose }) => {
                 label="Image"
                 placeholder="image"
               />
-            )}
+            </div>
             {formatError && (
               <div className="error-text">
                 Please upload in valid format JPEG or PNG
