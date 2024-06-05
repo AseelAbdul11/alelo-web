@@ -9,6 +9,7 @@ import { useMutation } from "react-query";
 import {
   AddProduct,
   AddProductImage,
+  editProduct,
   getProductsById,
 } from "../../API/ProductsAPI";
 import { CircularProgress } from "@mui/material";
@@ -19,6 +20,7 @@ import {
   editToggle,
   setImage,
   setName,
+  setProductId,
 } from "../../Slices/PopupSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -27,13 +29,16 @@ interface ProductProps {
 }
 const Products: React.FC<ProductProps> = ({ product_Id }) => {
   const dispatch = useDispatch();
-  const finalImage = useSelector((state: any) => state.popup.finalImage)
+  const finalImage = useSelector((state: any) => state.popup.finalImage);
   const [openProductsDialog, setOpenProductsDialog] = useState(false);
   const [openEditProductsDialog, setOpenEditProductsDialog] = useState(false);
   const [products, setProducts] = useState([]);
 
   const name: any = useSelector((state: any) => {
     return state?.popup?.name;
+  });
+  const productId: any = useSelector((state: any) => {
+    return state?.popup?.productId;
   });
   const image: any = useSelector((state: any) => state?.popup?.image);
 
@@ -53,13 +58,16 @@ const Products: React.FC<ProductProps> = ({ product_Id }) => {
   }, [product_Id]);
 
   const isLoading = getProductsByIdApi.isLoading;
-  const editProduct = (data: any) => {
+  const handleEditProduct = (data: any) => {
+    console.log(data, "daata");
+
     let toggle: any = true;
     dispatch(clearValidation());
-    setOpenEditProductsDialog(true);
     dispatch(setName(data.name));
     dispatch(setImage(data.photo));
+    dispatch(setProductId(data.id));
     dispatch(editToggle(toggle));
+    setOpenEditProductsDialog(true);
   };
 
   const editClose = () => {
@@ -76,7 +84,6 @@ const Products: React.FC<ProductProps> = ({ product_Id }) => {
           product_Id: res.data.id,
           photo: finalImage,
         };
-        console.log(finalImage)
         addProductImageApi.mutate(imageReqBody);
         setOpenProductsDialog(false);
         getProductsByIdApi.mutate(product_Id);
@@ -113,8 +120,6 @@ const Products: React.FC<ProductProps> = ({ product_Id }) => {
       ],
       photo: null,
     };
-    console.log(finalImage, 'final')
-    console.log(addProductReqBody)
     addProductApi.mutate(addProductReqBody);
   };
 
@@ -122,6 +127,32 @@ const Products: React.FC<ProductProps> = ({ product_Id }) => {
     dispatch(clearImage());
     dispatch(clearName());
     dispatch(clearValidation());
+  };
+  const editProductApi = useMutation({
+    mutationFn: (val: any) => editProduct(val, productId),
+    onSuccess: (res: any) => {
+      if (res.data) {
+        const imageReqBody = {
+          product_Id: res.data.id,
+          photo: finalImage,
+        };
+        addProductImageApi.mutate(imageReqBody);
+        setOpenEditProductsDialog(false);
+        getProductsByIdApi.mutate(product_Id);
+      }
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+  const handleSaveEditedProduct = () => {
+    const editProductReqBody = {
+      id: productId,
+      category_id: product_Id,
+      name: name,
+    };
+    editProductApi.mutate(editProductReqBody, productId);
   };
   return (
     <>
@@ -158,7 +189,7 @@ const Products: React.FC<ProductProps> = ({ product_Id }) => {
                   productsID={true}
                   isSelectable={true}
                   data={product}
-                  edit={editProduct}
+                  edit={handleEditProduct}
                 />
               );
             })
@@ -193,7 +224,7 @@ const Products: React.FC<ProductProps> = ({ product_Id }) => {
         onClose={() => setOpenEditProductsDialog(false)}
         isOpen={openEditProductsDialog}
         onClick={() => {
-          "api";
+          handleSaveEditedProduct();
         }}
         popUpTitle={"Edit Product"}
       />

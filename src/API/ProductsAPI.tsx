@@ -45,3 +45,13 @@ export const AddProductImage = (data: any) => {
     .then((response) => response)
     .catch((err) => err);
 };
+
+export const editProduct = (data: any, productId: any) => {
+  const url = Endpoints.PRODUCTS + `/${productId}`;
+  console.log(data, productId, "data appi");
+
+  return API(Endpoints.API_ENDPOINT)
+    .put(url, data)
+    .then((response) => response)
+    .catch((err) => ({ err }));
+};

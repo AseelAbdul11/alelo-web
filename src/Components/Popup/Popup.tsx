@@ -85,7 +85,7 @@ const Popup: React.FC<Props> = ({ isOpen, popUpTitle, onClick, onClose }) => {
       const reader = new FileReader()
       reader.addEventListener('load', () => {
         const imageUrl: any = reader.result?.toString() || ''
-        dispatch(setImage(imageUrl)) // image url to crop section
+        dispatch(setImage(imageUrl)) 
       })
       reader.readAsDataURL(file)
     } else {
