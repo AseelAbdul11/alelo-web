@@ -1,9 +1,9 @@
 import React, { FC, useState } from 'react'
-import './login.css'
+import '../../../Components/Login/LoginCard/login.css'
 import { Button, Form, Input, Typography } from 'antd';
 import { MailOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom';
-export const Login: FC = () => {
+export const ResetPasswordCard: FC = () => {
   const { Text, Link, Title } = Typography;
   const navigate = useNavigate()
   const onFinish = (values: any) => {
@@ -13,6 +13,7 @@ export const Login: FC = () => {
 
   };
   const [validation, setValidation] :any = useState([])
+  const [password,setPassword] = useState()
   const onFinishFailed = (errorInfo: any) => {
     setValidation(['onChange', 'onBlur'])
   };
@@ -22,12 +23,16 @@ export const Login: FC = () => {
     return value.test(val)
   }
 
+  const renterPassword = (e : any) =>{
+
+    setPassword(e.target.value)
+  }
   return (
     <div className='login-block'>
       <Title className='title' style={{
         marginBottom: '3rem', textAlign: 'center',
         marginTop: 0
-      }} level={3}>Log In</Title>
+      }} level={3}>Reset password</Title>
       <Form
         name="basic"
         validateTrigger="onSubmit"
@@ -39,20 +44,6 @@ export const Login: FC = () => {
         autoComplete="off"
         style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, }}
       >
-        <div style={{ textAlign: 'left', marginBottom: '30px' }}>
-          <Form.Item
-            name="username"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your valid email!',
-                type: 'email'
-              }
-            ]}
-            validateTrigger={validation}          >
-            <Input placeholder='Username' suffix={<MailOutlined style={{ color: 'grey' }} />} className='input' />
-          </Form.Item>
-        </div>
         <div style={{ textAlign: 'left' }}>
           <Form.Item
             name="password"
@@ -71,19 +62,35 @@ export const Login: FC = () => {
               })
             ]}
             validateTrigger={validation}          >
+            <Input.Password onChange={renterPassword} placeholder='Password' className='input' style={{ border: 'none', boxShadow: 'inset 0 0 0 1px #c8c8c8', height: '48px', borderRadius: '8px' }} />
+          </Form.Item>
+        </div>
+        <div style={{ textAlign: 'left' }}>
+          <Form.Item
+            name="confirmpassword"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your password!',
+              },
+              () => ({
+                validator(_, value) {
+                  if (!value || (password == value )) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error('password does not match'));
+                },
+              })
+            ]}
+            validateTrigger={validation}          >
             <Input.Password placeholder='Password' className='input' style={{ border: 'none', boxShadow: 'inset 0 0 0 1px #c8c8c8', height: '48px', borderRadius: '8px' }} />
           </Form.Item>
         </div>
-
-
-
-        <Text style={{ cursor : 'pointer',color: 'rgba(1, 174, 154, 1)', fontWeight: 300, fontSize: '14px', marginBottom: '78px', textAlign: 'right' }} onClick={()=>(navigate('/forget-password'))}>Forget Password?</Text>
         <Form.Item
-
         >
           <div style={{ width: '100%', display: "flex", justifyContent: 'center' }}>
             <Button style={{ borderRadius: '8px', width: '100%', background: "rgba(1, 174, 154, 1)", height: '48px' }} type="primary" htmlType="submit">
-              Submit
+             Reset password
             </Button>
           </div>
 

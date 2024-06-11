@@ -19,13 +19,13 @@ export const getCategoryById = (category_id: any) => {
 
 
 export const AddCategory = (category: any) => {
-    const url = Endpoints.ADD_PRODUCT
+    const url = Endpoints.PRODUCT_CATEGORIES
     return API(Endpoints.API_ENDPOINT).post(url, category).then((res)=> res).catch(err => err)
 }
 
 export const addCategoryImage = (data : any ) =>{
-    const { product_Id, photo } = data;
-    const url = Endpoints.ADD_PRODUCT_IMAGE + `/${product_Id}` + Endpoints.PHOTO;
+    const { category_id, photo } = data;
+    const url = Endpoints.ADD_PRODUCT_IMAGE + `/${category_id}` + Endpoints.PHOTO;
     return API(Endpoints.API_ENDPOINT).post(url , photo ).then((res)=> res).catch(err => err) 
 }
 

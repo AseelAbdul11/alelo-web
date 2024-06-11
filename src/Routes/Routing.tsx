@@ -73,6 +73,10 @@ const Routing = ({}) => {
       />
       {/* <Route path="/" element={<Popup />} /> */}
       <Route path={"/"} element={<LoginContainer />}/>
+      <Route path={"/forget-password"} element={<LoginContainer />}/>
+      <Route path={"/reset-password"} element={<LoginContainer />}/>
+      <Route path={"/otp-verification"} element={<LoginContainer />}/>
+      
 
     </Routes>
   );

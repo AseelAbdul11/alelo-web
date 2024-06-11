@@ -113,10 +113,11 @@ const Categories = () => {
     mutationFn: (val) => AddCategory(val),
     onSuccess: (res) => {
       const imageReqBody = {
-        product_Id: res.data.id,
+        category: res.data.id,
         photo: image,
       };
-      addCategoryImageApi.mutate(imageReqBody)
+      console.log(res)
+      // addCategoryImageApi.mutate(imageReqBody)
       // dispatch(addCategory(res.data))
     }
   })
@@ -140,12 +141,16 @@ const Categories = () => {
       formData.append("name", name);
       formData.append("image", image);
       let value: any = false;
-      const data: any = {
+      const data: any ={
+        id: null,
         name: name,
-        photo: finalImage || image,
-        show: true,
-        list: [],
-      };
+        language_name: [
+          {
+            lang: 'EN',
+            name: name
+          }
+        ]
+      }
       addCategoryAPi.mutate(data)
       // dispatch(addCategory(data));
       dispatch(setValidation(value));
