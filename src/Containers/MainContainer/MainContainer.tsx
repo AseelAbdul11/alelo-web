@@ -285,8 +285,14 @@ const MainContainer: React.FC<Props> = ({
           </div>
           <div
             style={{
-              minHeight: `${screenHeight - 170}px`,
-              maxHeight: `${screenHeight - 170}px`,
+              minHeight:
+                ScreenPath === "products"
+                  ? `${screenHeight - 170}px`
+                  : `${screenHeight - 105}px`,
+              maxHeight:
+                ScreenPath === "products"
+                  ? `${screenHeight - 170}px`
+                  : `${screenHeight - 105}px`,
             }}
             className="content-wrapper"
           >
