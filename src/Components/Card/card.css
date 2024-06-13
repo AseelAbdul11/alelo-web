@@ -1,11 +1,11 @@
 .card-container {
 
-    height: 205px;
+    min-height: 205px;
     border-radius: 20px;
     background-color: #FFF;
     /* max-width: 454px; */
     width: 22%;
-    padding: 10px;
+    padding: 12px;
     box-shadow: 8px 8px 16px 0px #01AE9A26;
     position: relative;
     flex-basis: auto;
@@ -58,7 +58,7 @@ input[type="checkbox"] {
 
 .card-edit {
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     right: 16px;
     top: 21px;
     cursor: pointer;
@@ -93,7 +93,7 @@ input[type="checkbox"] {
 
     .card-container {
         width: 30%;
-        height: 205px;
+        min-height: 205px;
     }
 
     .card-image-section {
@@ -105,7 +105,7 @@ input[type="checkbox"] {
 
     .card-container {
         width: 31%;
-        height: 210px;
+        min-height: 210px;
     }
 
     .card-image {
@@ -125,4 +125,9 @@ input[type="checkbox"] {
     .card-state {
         display: none;
     }
+}
+
+.views{
+    font-size: 11px;
+    color : rgba(92, 92, 92, 1)
 }

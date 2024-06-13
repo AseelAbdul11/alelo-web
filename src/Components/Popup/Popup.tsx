@@ -121,8 +121,8 @@ const Popup: React.FC<Props> = ({ isOpen, popUpTitle, onClick, onClose }) => {
 
 
   return (
-    <Modal show={isOpen} backdrop="static" keyboard={false} centered>
-      <Modal.Header>
+    <Modal show={isOpen} dialogClassName="custom-modal-size" backdrop="static" keyboard={false} centered>
+      <Modal.Header className="custom-modal-header">
         <div className="Popup_header_container">
           <p className="Popup_header_Text">{popUpTitle}</p>
         </div>

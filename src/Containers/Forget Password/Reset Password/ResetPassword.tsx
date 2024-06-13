@@ -9,7 +9,7 @@ export const ResetPasswordCard: FC = () => {
   const onFinish = (values: any) => {
     // dispatch(loginCredentials(values))
     // dispatch(login())
-  navigate('/dashboard')
+  navigate('/')
 
   };
   const [validation, setValidation] :any = useState([])

@@ -9,24 +9,34 @@
 }
 
 .modal-content {
+   
+    background-color: "#F7FCFB";
+    background-color: #F2F8F7;
+}
+.custom-modal-size{
     height: 440px;
     width: 350px;
-    background-color: "#F7FCFB";
-    margin: auto;
-    background-color: #F2F8F7;
     border-radius: 20px;
+
 }
+
+
 
 .modal-header {
     border-bottom: 1px solid #979797;
+    padding-left: 15px;
+    padding-top: 15px;
+    
+
+}
+
+.custom-modal-header{
+   
+    height: 8vh;
     display: flex;
     /* align-items: center; */
     flex-direction: column;
     justify-content: center;
-    padding-left: 15px;
-    padding-top: 15px;
-    height: 8vh;
-
 }
 
 .Popup_header_Text {
